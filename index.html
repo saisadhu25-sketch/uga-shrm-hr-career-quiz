@@ -69,17 +69,17 @@ function copyResult(){copyText(resultText()).then(ok=>notify(ok?'Your full resul
 function selectPostText(){const post=document.getElementById('suggestedPostText');post.focus();post.select();post.setSelectionRange(0,post.value.length);notify('Post text selected — press Ctrl+C or Command+C to copy it.')}
 const careerSlugs={'HR Business Partner':'hr-business-partner','Talent Acquisition':'talent-acquisition','People Analytics':'people-analytics','Learning & Development':'learning-development','Compensation & Benefits':'compensation-benefits','Employee Relations':'employee-relations','HR Compliance & Employment Law':'hr-compliance-employment-law','HR Technology / HRIS':'hr-technology-hris','Organizational Development & Change':'organizational-development-change','HR Operations':'hr-operations','Culture & Engagement':'culture-engagement'};
 const careerDescriptions={
-'HR Business Partner':'partners with leaders to connect people plans with business goals and advises on workforce challenges.',
-'Talent Acquisition':'finds, evaluates, and hires people whose skills fit an organization’s roles and needs.',
-'People Analytics':'uses workforce data to answer questions about hiring, retention, engagement, and organizational performance.',
-'Learning & Development':'builds employees’ skills through training, coaching, and career development programs.',
-'Compensation & Benefits':'designs and manages pay, incentives, health coverage, retirement plans, and other rewards.',
-'Employee Relations':'helps employees and managers resolve workplace concerns and supports fair, consistent practices.',
-'HR Compliance & Employment Law':'helps the organization follow employment laws and workplace policies, and reduces legal and compliance risks.',
-'HR Technology / HRIS':'manages HR software and people data, improving the systems employees and HR teams use.',
-'Organizational Development & Change':'improves organizational effectiveness, culture, and structure, and helps people navigate change.',
-'HR Operations':'runs essential HR services and processes such as onboarding, employee records, and policy administration.',
-'Culture & Engagement':'strengthens the employee experience through listening, communication, recognition, and engagement programs.'
+'HR Business Partner':'partnering with leaders to connect people plans with business goals and advising on workforce challenges.',
+'Talent Acquisition':'finding, evaluating, and hiring people whose skills fit an organization’s roles and needs.',
+'People Analytics':'using workforce data to answer questions about hiring, retention, engagement, and organizational performance.',
+'Learning & Development':'building employees’ skills through training, coaching, and career development programs.',
+'Compensation & Benefits':'designing and managing pay, incentives, health coverage, retirement plans, and other rewards.',
+'Employee Relations':'helping employees and managers resolve workplace concerns and supporting fair, consistent practices.',
+'HR Compliance & Employment Law':'helping the organization follow employment laws and workplace policies, and reducing legal and compliance risks.',
+'HR Technology / HRIS':'managing HR software and people data, and improving the systems employees and HR teams use.',
+'Organizational Development & Change':'improving organizational effectiveness, culture, and structure, and helping people navigate change.',
+'HR Operations':'running essential HR services and processes such as onboarding, employee records, and policy administration.',
+'Culture & Engagement':'strengthening the employee experience through listening, communication, recognition, and engagement programs.'
 };
 function careerGraphicPath(career){const slug=careerSlugs[career];if(!slug)throw new Error('No result graphic is mapped for '+career);return 'assets/'+slug+'.png'}
 function updateSharePanel(career){const slug=careerSlugs[career],description=careerDescriptions[career];if(!slug||!description)throw new Error('No result profile is mapped for '+career);document.getElementById('suggestedPostText').value="I just took the UGA SHRM Chapter's HR Career Quiz and matched with "+career+"!\n\nIn this field, HR professionals "+description+"\n\nHR is a vast field with many different career paths, so it's important to understand where your strengths and interests may fit best. This quiz was a great way to explore the different opportunities within HR and see how my strengths could translate into a future career.\n\nTake the quiz to discover your HR career match: https://saisadhu25-sketch.github.io/uga-shrm-hr-career-quiz/\n\n#UGASHRM #HumanResources #HRCareers #CareerDevelopment";const link=document.getElementById('downloadCareerGraphic');link.href=careerGraphicPath(career);link.download='UGA-SHRM-'+slug+'-Result.png';link.setAttribute('aria-label','Download '+career+' result PNG')}function saveResultState(ranked,user){const saved={ranked:ranked.map(x=>({name:x.name,fit:x.fit})),user},json=JSON.stringify(saved);try{localStorage.setItem(RESULT_STORAGE_KEY,json)}catch(e){}try{sessionStorage.setItem(RESULT_STORAGE_KEY,json)}catch(e){}try{const state=responses.length===QUESTION_COUNT&&responses.every(x=>Number.isInteger(x))?'#answers='+responses.join(''):'#result='+btoa(json);history.replaceState(null,'',location.pathname+location.search+state)}catch(e){}}
